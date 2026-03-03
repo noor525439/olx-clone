@@ -54,10 +54,10 @@ export default function Home() {
       <section className="overflow-hidden rounded-3xl border bg-gradient-to-br from-white to-slate-50 p-6 md:p-10">
         <div className="grid gap-8 md:grid-cols-2 md:items-center">
           <div>
-            <h1 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
-              Buy & Sell like OLX — with checkout & payments
+            <h1 className="font-display text-2xl font-bold tracking-tight md:text-3xl">
+              Buy & Sell — with checkout & payments
             </h1>
-            <p className="mt-3 text-slate-600">
+            <p className="mt-3 text-slate-600 text-sm ">
               Post ads, browse categories, add to cart, checkout, and pay online. Admin can manage users, ads, and orders.
             </p>
 
@@ -85,7 +85,7 @@ export default function Home() {
                 className="h-11 rounded-xl border bg-white px-3 text-sm outline-none focus:ring-2 focus:ring-slate-900/10"
               />
               <button
-                className="sm:col-span-3 h-11 rounded-xl bg-slate-900 px-4 text-sm font-semibold text-white hover:bg-slate-800"
+                className="sm:col-span-3 h-11 rounded-xl bg-black px-4 text-sm font-semibold text-white hover:bg-slate-800"
               >
                 Search
               </button>

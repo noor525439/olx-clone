@@ -2,13 +2,14 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useCart } from '../context/CartContext.jsx';
 import React from 'react';
+import logo from "../assets/logo.png"
 
 // Navigation links styling logic
 const navClass = ({ isActive }) => `
   relative px-4 py-2 text-sm font-semibold transition-all duration-200 rounded-xl
   ${isActive 
-    ? 'bg-slate-900 text-white shadow-md shadow-slate-200 scale-105' 
-    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+    ? 'bg-black text-white shadow-md shadow-slate-200 scale-105' 
+    : 'text-slate-600 hover:bg-slate-100 hover:text-black'
   }
 `;
 
@@ -25,12 +26,10 @@ export default function Navbar() {
         {/* Logo Section */}
         <div className="flex items-center gap-8">
           <Link to="/" className="group flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-white shadow-lg transition-transform group-hover:rotate-12">
-              <span className="text-xl font-black">B</span>
-            </div>
-            <span className="text-2xl font-black tracking-tight text-slate-900">
-              Bazaar<span className="text-blue-600">.</span>
-            </span>
+           
+             <img src={logo} alt=" " className="w-36 h-36">
+            </img>
+
           </Link>
 
           {/* Desktop Navigation */}
@@ -53,7 +52,7 @@ export default function Navbar() {
           {/* Search Button (Icon version) */}
           <button
             onClick={() => navigate('/products')}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition-all hover:bg-slate-50 hover:text-slate-900 sm:w-auto sm:px-4 sm:gap-2"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition-all hover:bg-slate-50 hover:text-black sm:w-auto sm:px-4 sm:gap-2"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -62,7 +61,7 @@ export default function Navbar() {
           </button>
 
           {/* Cart Section */}
-          <Link to="/cart" className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition-all hover:bg-slate-50 hover:text-slate-900 sm:w-auto sm:px-4 sm:gap-2">
+          <Link to="/cart" className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition-all hover:bg-slate-50 hover:text-black sm:w-auto sm:px-4 sm:gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
@@ -80,7 +79,7 @@ export default function Navbar() {
           {/* User Auth Section */}
           {!user ? (
             <Link 
-              className="inline-flex h-10 items-center justify-center rounded-xl bg-slate-900 px-6 text-sm font-bold text-white shadow-lg transition-all hover:bg-slate-800 active:scale-95" 
+              className="inline-flex h-10 items-center justify-center rounded-xl bg-black px-6 text-sm font-bold text-white shadow-lg transition-all hover:bg-slate-700 active:scale-95" 
               to="/login"
             >
               Login
@@ -100,7 +99,7 @@ export default function Navbar() {
                     </div>
                   )}
                 </div>
-                <span className="text-sm font-bold text-slate-700 group-hover:text-slate-900">{user.name}</span>
+                <span className="text-sm font-bold text-slate-700 group-hover:text-black">{user.name}</span>
               </Link>
               
               <button

@@ -19,9 +19,19 @@ import React from 'react';
 
 function PrivateRoute({ children, adminOnly }) {
   const { user, loading } = useAuth();
-  if (loading) return <div className="container" style={{ padding: '4rem 1rem', textAlign: 'center' }}>Loading...</div>;
+
+  console.log("Current User:", user); 
+  console.log("Is Admin Only Route:", adminOnly);
+
+  if (loading) return <div className="text-center py-20">Loading Auth...</div>;
+  
   if (!user) return <Navigate to="/login" replace />;
-  if (adminOnly && user.role !== 'admin') return <Navigate to="/" replace />;
+  
+  if (adminOnly && user.role !== 'admin') {
+    console.warn("Access Denied! User role is:", user.role);
+    return <Navigate to="/" replace />;
+  }
+  
   return children;
 }
 

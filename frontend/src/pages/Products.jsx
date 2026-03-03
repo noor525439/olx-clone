@@ -22,25 +22,29 @@ export default function Products() {
   const [items, setItems] = useState([]);
   const [pagination, setPagination] = useState({ page: 1, pages: 1, total: 0, limit: 12 });
 
-  const query = useMemo(() => {
-    const p = new URLSearchParams(params);
-    if (!p.get('page')) p.set('page', '1');
-    if (!p.get('limit')) p.set('limit', '12');
-    return p.toString();
-  }, [params]);
+  // 1. Simple query calculation without forcing new state
+  const currentQuery = params.toString();
 
   useEffect(() => {
     let alive = true;
     setLoading(true);
-    api.get(`/ads?${query}`, { silent: true })
+
+    // 2. Defaults API call level par handle karein
+    const fetchParams = new URLSearchParams(params);
+    if (!fetchParams.has('page')) fetchParams.set('page', '1');
+    if (!fetchParams.has('limit')) fetchParams.set('limit', '12');
+
+    api.get(`/ads?${fetchParams.toString()}`, { silent: true })
       .then(({ data }) => {
         if (!alive) return;
         setItems(data.items || []);
         setPagination(data.pagination || { page: 1, pages: 1, total: 0, limit: 12 });
       })
+      .catch(err => console.error("Fetch error:", err))
       .finally(() => alive && setLoading(false));
+
     return () => { alive = false; };
-  }, [query]);
+  }, [currentQuery]);
 
   function update(key, value) {
     const next = new URLSearchParams(params);

@@ -1,81 +1,91 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar.jsx';
 import React from 'react';
+import logo from "../assets/logo.png"; // Aapka logo
+
 export default function Layout() {
   return (
-    <div className="min-h-screen">
+    // 'flex-col' aur 'min-h-screen' footer ko bottom par push karne ke liye zaroori hain
+    <div className="flex flex-col min-h-screen font-sans antialiased text-slate-900">
+      
+      {/* Navigation */}
       <Navbar />
-      <main className="container py-6">
+
+      {/* Main Content Area */}
+      {/* 'flex-grow' ensures this takes up all available space */}
+      <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Outlet />
       </main>
-    <footer className="border-t bg-slate-50 text-slate-600">
-  <div className="container mx-auto px-4 py-12">
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-      
-      {/* Brand Section */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold text-black">Bazaar</h2>
-        <p className="text-sm leading-relaxed">
-          The best marketplace to buy and sell anything. From cars to mobiles, 
-          find amazing deals in your city.
-        </p>
-      </div>
 
-      {/* Quick Links */}
-      <div>
-        <h3 className="font-semibold text-slate-900 mb-4 uppercase text-xs tracking-wider">
-          Popular Categories
-        </h3>
-        <ul className="space-y-2 text-sm">
-          <li><a href="#" className="hover:text-gray-600 transition">Cars & Vehicles</a></li>
-          <li><a href="#" className="hover:text-gray-600 transition">Properties</a></li>
-          <li><a href="#" className="hover:text-gray-600 transition">Mobile Phones</a></li>
-          <li><a href="#" className="hover:text-gray-600 transition">Electronics</a></li>
-        </ul>
-      </div>
+      {/* Footer Section */}
+      <footer className="border-t bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            
+            {/* Brand Section */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                {/* Agar logo image use karni hai: <img src={logo} alt="Zaytoo" className="h-8 w-auto" /> */}
+                <h1 className="text-2xl font-black tracking-tighter text-black">ZAYTOO</h1>
+              </div>
+              <p className="text-slate-500 text-sm leading-relaxed max-w-xs">
+                The most trusted marketplace to buy and sell anything. Find amazing deals in your city today.
+              </p>
+            </div>
 
-      {/* Support Section */}
-      <div>
-        <h3 className="font-semibold text-slate-900 mb-4 uppercase text-xs tracking-wider">
-          Support
-        </h3>
-        <ul className="space-y-2 text-sm">
-          <li><a href="#" className="hover:text-gray-600 transition">Help Center</a></li>
-          <li><a href="#" className="hover:text-gray-600 transition">Privacy Policy</a></li>
-          <li><a href="#" className="hover:text-gray-600 transition">Terms of Use</a></li>
-          <li><a href="#" className="hover:text-gray-600 transition">Safety Tips</a></li>
-        </ul>
-      </div>
+            {/* Quick Links */}
+            <div>
+              <h3 className="text-sm font-bold text-black uppercase tracking-widest mb-6">
+                Popular Categories
+              </h3>
+              <ul className="space-y-3 text-sm text-slate-600">
+                <li><a href="#" className="hover:text-black hover:underline transition-all">Cars & Vehicles</a></li>
+                <li><a href="#" className="hover:text-black hover:underline transition-all">Properties</a></li>
+                <li><a href="#" className="hover:text-black hover:underline transition-all">Mobile Phones</a></li>
+                <li><a href="#" className="hover:text-black hover:underline transition-all">Electronics</a></li>
+              </ul>
+            </div>
 
-      {/* Newsletter / Contact */}
-      <div>
-        <h3 className="font-semibold text-slate-900 mb-4 uppercase text-xs tracking-wider">
-          Contact Us
-        </h3>
-        <p className="text-sm mb-4">Questions or feedback? We'd love to hear from you.</p>
-        <button className="bg-black text-white px-4 py-2 rounded text-sm font-medium hover:bg-gray-600 transition w-full md:w-auto">
-          Contact Support
-        </button>
-      </div>
+            {/* Support Section */}
+            <div>
+              <h3 className="text-sm font-bold text-black uppercase tracking-widest mb-6">
+                Support
+              </h3>
+              <ul className="space-y-3 text-sm text-slate-600">
+                <li><a href="#" className="hover:text-black hover:underline transition-all">Help Center</a></li>
+                <li><a href="#" className="hover:text-black hover:underline transition-all">Privacy Policy</a></li>
+                <li><a href="#" className="hover:text-black hover:underline transition-all">Terms of Use</a></li>
+                <li><a href="#" className="hover:text-black hover:underline transition-all">Safety Tips</a></li>
+              </ul>
+            </div>
 
-    </div>
+            {/* Newsletter / Contact */}
+            <div className="space-y-4">
+              <h3 className="text-sm font-bold text-black uppercase tracking-widest mb-6">
+                Contact Us
+              </h3>
+              <p className="text-sm text-slate-600">Questions or feedback? Reach out to our team.</p>
+              <button className="w-full md:w-auto bg-black text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-slate-800 transition-colors shadow-sm">
+                Contact Support
+              </button>
+            </div>
 
-    {/* Bottom Bar */}
-    <div className="mt-12 pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
-      <p className="text-xs">
-        © {new Date().getFullYear()} Bazaar. Built with <span className="text-red-500">❤️</span> using MERN Stack.
-      </p>
-      
-      {/* Social Icons Placeholder */}
-      <div className="flex space-x-6">
-        <a href="#" className="hover:text-slate-600"><span className="sr-only">Facebook</span>FB</a>
-        <a href="#" className="hover:text-slate-600"><span className="sr-only">Twitter</span>TW</a>
-        <a href="#" className="hover:text-slate-600"><span className="sr-only">Instagram</span>IG</a>
-      </div>
-    </div>
-  </div>
-</footer>
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="mt-12 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p className="text-xs text-slate-500">
+              © {new Date().getFullYear()} <span className="font-bold text-black">ZAYTOO</span>. All rights reserved.
+            </p>
+            
+            <div className="flex items-center space-x-6 text-sm font-medium text-slate-600">
+              <a href="#" className="hover:text-black transition-colors">Facebook</a>
+              <a href="#" className="hover:text-black transition-colors">Twitter</a>
+              <a href="#" className="hover:text-black transition-colors">Instagram</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
-
