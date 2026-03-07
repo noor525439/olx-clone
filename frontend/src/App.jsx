@@ -4,7 +4,6 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
-import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -44,7 +43,6 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="products" element={<Products />} />
           <Route path="products/:id" element={<ProductDetail />} />
-          <Route path="cart" element={<PrivateRoute><Cart /></PrivateRoute>} />
           <Route path="checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
           <Route path="checkout/success" element={<PrivateRoute><PaymentSuccess /></PrivateRoute>} />
           <Route path="checkout/failed" element={<PrivateRoute><PaymentFailed /></PrivateRoute>} />

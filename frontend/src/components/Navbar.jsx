@@ -1,8 +1,8 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
-import { useCart } from '../context/CartContext.jsx';
 import React from 'react';
 import logo from "../assets/logo.png"
+import { useCart } from '../context/CartContext.jsx';
 
 // Navigation links styling logic
 const navClass = ({ isActive }) => `
@@ -14,10 +14,11 @@ const navClass = ({ isActive }) => `
 `;
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
-  const { items } = useCart();
+  const { user, logout } = useAuth()
   const navigate = useNavigate();
-  const cartCount = items.reduce((sum, it) => sum + it.qty, 0);
+
+  const { isGridView, toggleGrid } = useCart();
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-100 bg-white/70 backdrop-blur-md">
@@ -31,6 +32,8 @@ export default function Navbar() {
             </img>
 
           </Link>
+
+       
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
@@ -59,19 +62,6 @@ export default function Navbar() {
             </svg>
             <span className="hidden sm:inline font-bold text-sm">Search</span>
           </button>
-
-          {/* Cart Section */}
-          <Link to="/cart" className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition-all hover:bg-slate-50 hover:text-black sm:w-auto sm:px-4 sm:gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-            </svg>
-            <span className="hidden sm:inline font-bold text-sm">Cart</span>
-            {cartCount > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-blue-600 text-[10px] font-bold text-white ring-2 ring-white sm:static sm:ring-0 sm:ml-1">
-                {cartCount}
-              </span>
-            )}
-          </Link>
 
           {/* Vertical Divider */}
           <div className="mx-1 h-6 w-px bg-slate-200 hidden sm:block" />
@@ -108,6 +98,23 @@ export default function Navbar() {
               >
                 Logout
               </button>
+                 <button 
+            onClick={toggleGrid}
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-sm text-slate-600 transition-all hover:bg-slate-50 active:scale-90"
+            title="Toggle Layout"
+          >
+            {isGridView ? (
+              /* Icon for 1 Column (Single Row) */
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            ) : (
+              /* Icon for 2 Columns (Grid) */
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+              </svg>
+            )}
+          </button>
             </div>
           )}
         </div>

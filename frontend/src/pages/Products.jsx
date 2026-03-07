@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import api from '../api';
 import AdCard from '../components/AdCard.jsx';
 import React from 'react';
+import { useCart } from '../context/CartContext.jsx';
 
 const CATEGORIES = [
   { id: '', label: 'All Categories' },
@@ -17,6 +18,7 @@ const CATEGORIES = [
 ];
 
 export default function Products() {
+  const { isGridView } = useCart();
   const [params, setParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
@@ -163,22 +165,32 @@ export default function Products() {
             </div>
           </div>
 
-          {loading ? (
-            <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="h-64 md:h-72 rounded-3xl bg-slate-100 animate-pulse" />
-              ))}
-            </div>
-          ) : items.length === 0 ? (
+{loading ? (
+  <div className={`grid gap-4 md:gap-6 ${
+    isGridView 
+      ? 'grid-cols-2 ' // Grid view
+      : 'grid-cols-1 w-full'                               // Row view
+  }`}>
+    {[...Array(6)].map((_, i) => (
+      <div key={i} className={`${isGridView ? 'h-64 md:h-72' : 'h-32 md:h-40'} rounded-3xl bg-slate-100 animate-pulse`} />
+    ))}
+  </div>
+) : items.length === 0 ? (
             <div className="rounded-3xl border-2 border-dashed border-slate-200 bg-white py-12 md:py-20 text-center px-4">
               <div className="text-slate-400 font-bold mb-2 text-lg">No Results Found</div>
               <p className="text-slate-500 text-sm">Try adjusting your filters or search keywords.</p>
             </div>
           ) : (
             <>
-              <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
-                {items.map((it) => <AdCard key={it._id} item={it} />)}
-              </div>
+   <div className={`grid gap-4 md:gap-6 ${
+    isGridView 
+      ? 'grid-cols-2' 
+      : 'grid-cols-1 w-full'                        
+}`}>
+  {items.map((it) => (
+    <AdCard key={it._id} item={it} />
+  ))}
+</div>
 
               {/* Responsive Pagination */}
               <div className="mt-10 mb-6 flex flex-wrap items-center justify-center gap-3 md:gap-4">

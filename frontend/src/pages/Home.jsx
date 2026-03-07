@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import AdCard from '../components/AdCard.jsx';
 import React from 'react';
+import { useCart } from '../context/CartContext.jsx';
 
 const CATEGORIES = [
   { id: 'cars', label: 'Cars' },
@@ -16,6 +17,7 @@ const CATEGORIES = [
 ];
 
 export default function Home() {
+  const { isGridView } = useCart();
   const navigate = useNavigate();
   const [q, setQ] = useState('');
   const [category, setCategory] = useState('');
@@ -55,10 +57,10 @@ export default function Home() {
         <div className="grid gap-8 md:grid-cols-2 md:items-center">
           <div>
             <h1 className="font-display text-2xl font-bold tracking-tight md:text-3xl">
-              Buy & Sell — with checkout & payments
+             Buy instantly. Sell effortlessly. Your marketplace, simplified.
             </h1>
             <p className="mt-3 text-slate-600 text-sm ">
-              Post ads, browse categories, add to cart, checkout, and pay online. Admin can manage users, ads, and orders.
+             Your items, someone’s treasure—buy and sell with a single click.
             </p>
 
             <form onSubmit={submit} className="mt-6 grid gap-3 sm:grid-cols-3">
@@ -107,23 +109,41 @@ export default function Home() {
         </div>
       </section>
 
-      <section>
-        <div className="flex items-center justify-between">
-          <h2 className="font-display text-xl font-semibold">Latest ads</h2>
-          <button onClick={() => navigate('/products')} className="text-sm font-medium text-slate-700 hover:underline">
-            View all
-          </button>
+<section>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="font-display text-xl font-bold">Latest ads</h2>
+        <button 
+          onClick={() => navigate('/products')} 
+          className="text-sm font-semibold text-slate-700 hover:text-black transition-colors"
+        >
+          View all
+        </button>
+      </div>
+      
+      {loading ? (
+        // Loading state ko bhi grid ke mutabiq adjust karein
+        <div className={`grid gap-4 ${isGridView ? 'grid-cols-2 lg:grid-cols-4' : 'grid-cols-1'}`}>
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className={`rounded-3xl bg-slate-100 animate-pulse ${isGridView ? 'h-60' : 'h-32'}`} />
+          ))}
         </div>
-        {loading ? (
-          <div className="mt-4 rounded-2xl border bg-white p-6 text-sm text-slate-600">Loading…</div>
-        ) : items.length === 0 ? (
-          <div className="mt-4 rounded-2xl border bg-white p-6 text-sm text-slate-600">No ads yet.</div>
-        ) : (
-          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {items.map((it) => <AdCard key={it._id} item={it} />)}
-          </div>
-        )}
-      </section>
+      ) : items.length === 0 ? (
+        <div className="rounded-3xl border-2 border-dashed border-slate-200 bg-slate-50 py-12 text-center text-sm text-slate-500">
+          No ads available right now.
+        </div>
+      ) : (
+        // Yahan Dynamic Grid Classes apply ho rahi hain
+        <div className={`grid gap-4 ${
+          isGridView 
+            ? 'grid-cols-2 md:grid-cols-3 ' // Multi-column (2 on mobile, 4 on desktop)
+            : 'grid-cols-1'                               // Single-column (List view)
+        }`}>
+          {items.map((it) => (
+            <AdCard key={it._id} item={it} />
+          ))}
+        </div>
+      )}
+    </section>
     </div>
   );
 }
